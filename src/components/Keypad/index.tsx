@@ -1,37 +1,35 @@
+import { useGameContext } from "../../providers/game";
+
 type KeypadProps = {
   actionButtons: string[];
-  currentColumnIndex: number;
-  currentRowIndex: number;
-  deleteLatestEntry: () => void;
   digitButtons: string[];
-  handleValueOrOperatorClick: (
-    button: string,
-    currentRowIndex: number,
-    currentColumnIndex: number
-  ) => void;
   operatorButtons: string[];
-  submitSolutionAttempt: () => void;
 };
 
 export default function Keypad({
   actionButtons,
-  currentColumnIndex,
-  currentRowIndex,
-  deleteLatestEntry,
   digitButtons,
-  handleValueOrOperatorClick,
   operatorButtons,
-  submitSolutionAttempt
 }: KeypadProps) {
+  const [
+    {
+      currentColumnIndex,
+      currentRowIndex,
+    },
+    {
+      deleteLatestEntry,
+      handleValueOrOperatorClick = () => {},
+      submitSolutionAttempt,
+    }
+  ] = useGameContext()
+
   return (
     <>
       <div className="button-container">
         {digitButtons.map((button, index) => (
           <button
             key={index}
-            onClick={() =>
-              handleValueOrOperatorClick(button, currentRowIndex, currentColumnIndex)
-            }
+            onClick={() => handleValueOrOperatorClick(button)}
             className="button"
           >
             {button}
@@ -42,9 +40,7 @@ export default function Keypad({
         {operatorButtons.map((button, index) => (
           <button
             key={index}
-            onClick={() =>
-              handleValueOrOperatorClick(button, currentRowIndex, currentColumnIndex)
-            }
+            onClick={() => handleValueOrOperatorClick(button)}
             className="button"
           >
             {button}

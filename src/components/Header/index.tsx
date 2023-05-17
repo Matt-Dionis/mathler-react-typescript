@@ -1,11 +1,8 @@
-import type { StatusProp } from "../../App";
+import { useGameContext } from "../../providers/game" 
 
-type HeaderProps = {
-  status: StatusProp,
-  total: number,
-};
+export default function Header() {
+  const [{ total }] = useGameContext()
 
-export default function Header({ status, total }: HeaderProps) {
   return (
     <div className="header">
       <h1 className="title">Mathler</h1>
