@@ -11,7 +11,10 @@ export type StatusProp = {
 export default function useGame() {
   const [currentColumnIndex, setCurrentColumnIndex] = useState<number>(0);
   const [currentRowIndex, setCurrentRowIndex] = useState<number>(0);
+  const [disabledKeys, setDisabledKeys] = useState<string[]>([])
+  const [exactMatches, setExactMatches] = useState<string[]>([])
   const [grid, setGrid] = useState<string[][]>(DEFAULT_GRID);
+  const [looseMatches, setLooseMatches] = useState<string[]>([])
   const [solution, setSolution] = useState<string[]>(["", "", "", "", "", ""]);
   const [status, setStatus] = useState<StatusProp>({ complete: false, success: false });
   const [total, setTotal] = useState<number>(0);
@@ -31,10 +34,10 @@ export default function useGame() {
     }
   }, [currentColumnIndex, currentRowIndex, grid, status]);
 
-  const handleValueOrOperatorClick = useCallback(() => {
+  const handleValueOrOperatorClick = useCallback((key: string) => {
       if (!status.complete && currentColumnIndex < solution.length) {
         let newGrid = [...grid];
-        newGrid[currentRowIndex][currentColumnIndex] = "button";
+        newGrid[currentRowIndex][currentColumnIndex] = key;
         setGrid(newGrid);
         setCurrentColumnIndex((prev) => prev + 1);
       }
@@ -44,23 +47,44 @@ export default function useGame() {
 
   const submitSolutionAttempt = useCallback(() => {
     if (!status.complete) {
+      const latestAttempt = grid[currentRowIndex]
       const attemptHasNecessaryLength = currentColumnIndex === solution.length
-      const attemptIsCorrect = grid[currentRowIndex].toString() === solution.toString()
+      const attemptIsCorrect = latestAttempt.toString() === solution.toString()
       const finalAttempt = currentRowIndex === grid.length - 1
 
       if (attemptHasNecessaryLength) {
-        if (attemptIsCorrect) {
-          setStatus({ complete: true, success: true });
+        let calculatedTotal = 0
+        try {
+          calculatedTotal = Function(`return (${latestAttempt.join("")})`)()
+
+          if (calculatedTotal !== total) {
+            alert(`Every guess must equal ${total}`)
+            return
+          }
+        } catch (err) {
+          alert(`Every guess must equal ${total}`)
+          return
+        }
+        for (let i = 0; i < latestAttempt.length; i++) {
+          if (latestAttempt[i] === solution[i]) {
+            setExactMatches((prev) => [ ...prev, latestAttempt[i]])
+          } else if (solution.includes(latestAttempt[i])) {
+            setLooseMatches((prev) => [ ...prev, latestAttempt[i]])
+          } else {
+            setDisabledKeys((prev) => [ ...prev, latestAttempt[i]])
+          }
         }
 
-        if (!finalAttempt) {
-          setCurrentRowIndex((prev) => prev + 1);
-          setCurrentColumnIndex(0)
+        if (attemptIsCorrect) {
+          setStatus({ complete: true, success: true });
         }
 
         if (finalAttempt && !attemptIsCorrect) {
           setStatus({ complete: true, success: false })
         }
+
+        setCurrentRowIndex((prev) => prev + 1);
+        setCurrentColumnIndex(0)
       }
     }
   }, [currentColumnIndex, currentRowIndex, grid, solution, status]);
@@ -69,7 +93,10 @@ export default function useGame() {
     {
       currentColumnIndex,
       currentRowIndex,
+      disabledKeys,
+      exactMatches,
       grid,
+      looseMatches,
       solution,
       status,
       total,

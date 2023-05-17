@@ -14,8 +14,8 @@ export default function App() {
         <Grid />
         <Keypad
           actionButtons={ACTIONS}
-          digitButtons={DIGITS}
-          operatorButtons={OPERATORS}
+          digitKeys={DIGITS}
+          operatorKeys={OPERATORS}
         />
       </GameProvider>
     </div>

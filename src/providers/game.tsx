@@ -2,14 +2,16 @@ import { ReactNode, createContext, useContext } from "react"
 
 import useGame from "../hooks/useGame"
 import { DEFAULT_GRID } from "../constants";
-import type { StatusProp } from "../hooks/useGame";
 
 const GameContext = createContext([
   {
     currentColumnIndex: 0,
     currentRowIndex: 0,
+    disabledKeys: [] as string[],
+    exactMatches: [] as string[],
     grid: DEFAULT_GRID,
-    solution: ["", "", "", "", "", ""],
+    looseMatches: [] as string[],
+    solution: [] as string[],
     status: { complete: false, success: false },
     total: 0,
   },

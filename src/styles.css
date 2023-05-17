@@ -25,6 +25,10 @@
   flex-direction: column;
 }
 
+.active-populated {
+  border: 2px solid black;
+}
+
 .button-container {
   width: 100vw;
   display: flex;
@@ -49,36 +53,6 @@
   border-color: #cbd5e1;
 }
 
-.button.disabled {
-  background-color: #94a3b8;
-  border-color: #94a3b8;
-  color: white;
-}
-
-.button.exact {
-  background-color: #22c55e;
-  border-color: #22c55e;
-  color: white;
-}
-
-.button.exact:active,
-.button.exact:hover {
-  background-color: #15803d;
-  border-color: #15803d;
-}
-
-.button.present {
-  background-color: #eab308;
-  border-color: #eab308;
-  color: white;
-}
-
-.button.present:active,
-.button.present:hover {
-  background-color: #a16207;
-  border-color: #a16207;
-}
-
 .header {
   width: 100vw;
   height: 6vh;
@@ -92,4 +66,40 @@
 
 .success-message {
   color: #22c55e;
+}
+
+.exact-match {
+  background-color: #22c55e;
+  border-color: #22c55e;
+  color: white;
+}
+
+.button.exact-match:active,
+.button.exact-match:hover {
+  background-color: #15803d;
+  border-color: #15803d;
+}
+
+.loose-match {
+  background-color: #eab308;
+  border-color: #eab308;
+  color: white;
+}
+
+.button.loose-match:active,
+.button.loose-match:hover {
+  background-color: #a16207;
+  border-color: #a16207;
+}
+
+.no-match {
+  background-color: #94a3b8;
+  border-color: #94a3b8;
+  color: white;
+}
+
+.button.no-match:active,
+.button.no-match:hover {
+  background-color: #94a3b8;
+  border-color: #94a3b8;
 }

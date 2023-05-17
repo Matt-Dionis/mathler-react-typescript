@@ -1,4 +1,5 @@
 import { useGameContext } from "../../providers/game";
+import Box from "../Box";
 
 export default function Grid() {
   const [{ grid }] = useGameContext()
@@ -7,11 +8,9 @@ export default function Grid() {
     <div className="grid-container">
       <div className="grid">
         {grid?.map((row, rowIndex) => {
-          return row.map((button: string, colIndex: number) => {
+          return row.map((key: string, colIndex: number) => {
             return (
-              <div key={`${rowIndex},${colIndex}`} className="cell">
-                {button}
-              </div>
+              <Box key={`${rowIndex},${colIndex}`} columnIndex={colIndex} rowIndex={rowIndex} />
             );
           });
         })}

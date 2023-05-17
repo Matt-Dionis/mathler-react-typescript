@@ -1,59 +1,98 @@
+import { useCallback, useEffect } from "react";
+
+import Key from "../Key";
 import { useGameContext } from "../../providers/game";
 
 type KeypadProps = {
   actionButtons: string[];
-  digitButtons: string[];
-  operatorButtons: string[];
+  digitKeys: string[];
+  operatorKeys: string[];
 };
 
 export default function Keypad({
   actionButtons,
-  digitButtons,
-  operatorButtons,
+  digitKeys,
+  operatorKeys,
 }: KeypadProps) {
-  const [
-    {
-      currentColumnIndex,
-      currentRowIndex,
+  const [{
+    currentColumnIndex,
+    disabledKeys,
+    exactMatches,
+    looseMatches,
+    status,
+  },
+  {
+    deleteLatestEntry,
+    handleValueOrOperatorClick,
+    submitSolutionAttempt,
+  }] = useGameContext()
+
+  const handleKeyboardInput = useCallback(
+    (event: KeyboardEvent) => {
+      if (!status?.complete) {
+        if (event.key === "Backspace") {
+          if (deleteLatestEntry) {
+            deleteLatestEntry();
+          }
+          return
+        }
+        if (event.key === "Enter") {
+          if (submitSolutionAttempt) {
+            submitSolutionAttempt();
+          }
+          return
+        }
+  
+        const attemptkeys = [ ...digitKeys, ...operatorKeys ]
+  
+        if (attemptkeys.includes(event.key)) {
+          if (handleValueOrOperatorClick) {
+            handleValueOrOperatorClick(event.key)
+          }
+        }
+      }
     },
-    {
-      deleteLatestEntry,
-      handleValueOrOperatorClick = () => {},
-      submitSolutionAttempt,
-    }
-  ] = useGameContext()
+    [currentColumnIndex]
+  );
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyboardInput);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyboardInput);
+    };
+  }, [handleKeyboardInput]);
 
   return (
     <>
       <div className="button-container">
-        {digitButtons.map((button, index) => (
-          <button
+        {digitKeys.map((key, index) => (
+          <Key
+            exactMatch={exactMatches?.includes(key) || false}
             key={index}
-            onClick={() => handleValueOrOperatorClick(button)}
-            className="button"
-          >
-            {button}
-          </button>
+            keyType={key}
+            looseMatch={looseMatches?.includes(key) || false}
+            noMatch={disabledKeys?.includes(key) || false}
+          />
         ))}
       </div>
       <div className="button-container">
-        {operatorButtons.map((button, index) => (
-          <button
+        {operatorKeys.map((key, index) => (
+          <Key
+            exactMatch={exactMatches?.includes(key) || false}
             key={index}
-            onClick={() => handleValueOrOperatorClick(button)}
-            className="button"
-          >
-            {button}
-          </button>
+            keyType={key}
+            looseMatch={looseMatches?.includes(key) || false}
+            noMatch={disabledKeys?.includes(key) || false}
+          />
         ))}
       </div>
       <div className="button-container">
-        <button onClick={deleteLatestEntry} className="button">
-          {actionButtons[0]}
-        </button>
-        <button onClick={submitSolutionAttempt} className="button">
-          {actionButtons[1]}
-        </button>
+        <Key
+          keyType={actionButtons[0]}
+        />
+        <Key
+          keyType={actionButtons[1]}
+        />
       </div>
     </>
   );
