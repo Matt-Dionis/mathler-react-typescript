@@ -13,5 +13,6 @@ describe('<Keypad />', () => {
             operatorKeys={OPERATORS}
           />)
     expect(container.getElementsByClassName('button-container').length).toBe(3)
+    expect(container.getElementsByClassName('button').length).toBe(16)
   })
 })
