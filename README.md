@@ -1,6 +1,8 @@
 # Overiew
 This project is a Mathler app built in React with TypeScript. Users can play one "daily" game, and after completing it they can generate a new "random" game. All Mathler rules are followed. Users can choose to input answers by clicking the on-screen keypad or using their keyboard.
 
+https://github.com/Matt-Dionis/mathler-react-typescript/assets/17889952/11bde965-5f47-4e45-834a-d1605fc8d37c
+
 # Running locally
 ## To run locally:
 * `git clone git@github.com:Matt-Dionis/mathler-react-typescript.git`
@@ -14,7 +16,11 @@ This project is a Mathler app built in React with TypeScript. Users can play one
 # CI/CD
 GitHub Actions have been configured to run ESLint and Jest tests every time changes are pushed up. These tests need to pass before pull requests can be merged. A Netlify deploy action has also been added to the pull request flow but these deployments still need some work so **please do not expect the deployed site to work for the time being.**
 
+<img width="875" alt="Screenshot 2023-05-18 at 4 34 38 PM" src="https://github.com/Matt-Dionis/mathler-react-typescript/assets/17889952/6b42f50e-6fb3-4660-879c-4c1083f0ab20">
+
 A pull request template has also been added for ease of future PR reviews.
+
+<img width="859" alt="Screenshot 2023-05-18 at 4 35 22 PM" src="https://github.com/Matt-Dionis/mathler-react-typescript/assets/17889952/ed06611b-6cf9-47bd-b8a7-4bd8685232c1">
 
 # Code design decisions
 This React application was built with TypeScript to enforce build-time type safety checks. CSS modules were introduced to make CSS more manageable. ESLint was introduced to catch code style issues before changes are pushed up.
