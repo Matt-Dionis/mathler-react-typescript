@@ -1,3 +1,4 @@
+import React from 'react'
 import { type ReactNode, createContext, useContext } from 'react'
 
 import useGame from '../hooks/useGame'
@@ -22,7 +23,7 @@ const GameContext = createContext([
   }
 ])
 
-export default function GameProvider ({ children }: { children: ReactNode }) {
+export default function GameProvider ({ children }: { children: ReactNode }): JSX.Element {
   const gameData = useGame()
 
   return (
@@ -32,6 +33,6 @@ export default function GameProvider ({ children }: { children: ReactNode }) {
   )
 }
 
-export function useGameContext () {
+export function useGameContext (): any {
   return useContext(GameContext)
 }

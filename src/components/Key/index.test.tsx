@@ -1,7 +1,7 @@
+import React from 'react'
 import '@testing-library/jest-dom'
-import { fireEvent, render, screen } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import Key from './index'
-import GameProvider from '../../providers/game'
 
 describe('<Key />', () => {
   it('should render one button', () => {
@@ -51,22 +51,4 @@ describe('<Key />', () => {
     )
     expect(container.getElementsByClassName('no-match').length).toBe(1)
   })
-
-  // it('onSelectKey handler for delete', () => {
-  //   const { container } = render(
-  //     <GameProvider>
-  //       <Key
-  //         exactMatch={false}
-  //         keyType="delete"
-  //         looseMatch={false}
-  //         noMatch={true}
-  //       />
-  //     </GameProvider>
-  //   );
-
-  //   const button = container.getElementsByClassName("button")[0];
-  //   fireEvent.click(button);
-
-  //   expect(screen.getByTestId("counter-text")).toHaveTextContent("1");
-  // });
 })

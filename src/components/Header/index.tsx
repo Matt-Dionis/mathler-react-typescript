@@ -1,6 +1,7 @@
+import React from 'react'
 import { useGameContext } from '../../providers/game'
 
-export default function Header () {
+export default function Header (): JSX.Element {
   const [{ total }] = useGameContext()
 
   return (

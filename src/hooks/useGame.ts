@@ -8,7 +8,26 @@ export interface StatusProp {
   success: boolean
 }
 
-export default function useGame () {
+export type UseGameReturn = [
+  {
+    currentColumnIndex: number
+    currentRowIndex: number
+    disabledKeys: string[]
+    exactMatches: string[]
+    grid: string[][]
+    looseMatches: string[]
+    solution: string[]
+    status: StatusProp
+    total: number
+  },
+  {
+    deleteLatestEntry: () => void
+    handleValueOrOperatorClick: (key: string) => void
+    submitSolutionAttempt: () => void
+  },
+]
+
+export default function useGame (): UseGameReturn {
   const [currentColumnIndex, setCurrentColumnIndex] = useState<number>(0)
   const [currentRowIndex, setCurrentRowIndex] = useState<number>(0)
   const [disabledKeys, setDisabledKeys] = useState<string[]>([])
@@ -55,6 +74,7 @@ export default function useGame () {
       if (attemptHasNecessaryLength) {
         let calculatedTotal = 0
         try {
+          // eslint-disable-next-line @typescript-eslint/no-implied-eval, no-new-func
           calculatedTotal = Function(`return (${latestAttempt.join('')})`)()
 
           if (calculatedTotal !== total) {

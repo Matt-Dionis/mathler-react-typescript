@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 
 import Key from '../Key'
 import { useGameContext } from '../../providers/game'
@@ -13,7 +13,7 @@ export default function Keypad ({
   actionButtons,
   digitKeys,
   operatorKeys
-}: KeypadProps) {
+}: KeypadProps): JSX.Element {
   const [{
     currentColumnIndex,
     disabledKeys,
@@ -29,7 +29,7 @@ export default function Keypad ({
 
   const handleKeyboardInput = useCallback(
     (event: KeyboardEvent) => {
-      if (!status?.complete) {
+      if ((status?.complete) === false) {
         if (event.key === 'Backspace') {
           if (deleteLatestEntry != null) {
             deleteLatestEntry()
@@ -67,22 +67,22 @@ export default function Keypad ({
       <div className="button-container">
         {digitKeys.map((key, index) => (
           <Key
-            exactMatch={exactMatches?.includes(key) || false}
+            exactMatch={((exactMatches?.includes(key)) === true) || false}
             key={index}
             keyType={key}
-            looseMatch={looseMatches?.includes(key) || false}
-            noMatch={disabledKeys?.includes(key) || false}
+            looseMatch={((looseMatches?.includes(key)) === true) || false}
+            noMatch={((disabledKeys?.includes(key)) === true) || false}
           />
         ))}
       </div>
       <div className="button-container">
         {operatorKeys.map((key, index) => (
           <Key
-            exactMatch={exactMatches?.includes(key) || false}
+            exactMatch={((exactMatches?.includes(key)) === true) || false}
             key={index}
             keyType={key}
-            looseMatch={looseMatches?.includes(key) || false}
-            noMatch={disabledKeys?.includes(key) || false}
+            looseMatch={((looseMatches?.includes(key)) === true) || false}
+            noMatch={((disabledKeys?.includes(key)) === true) || false}
           />
         ))}
       </div>

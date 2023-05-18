@@ -1,3 +1,8 @@
+interface GameSettings {
+  solution: string[]
+  total: number
+}
+
 const games = [
   {
     solution: ['7', '*', '8', '-', '1', '2'],
@@ -25,7 +30,7 @@ const games = [
   }
 ]
 
-const fetchGame = () => {
+const fetchGame = (): GameSettings => {
   // const index = Math.floor(Math.random() * games.length);
   // return games[index];
   return games[0]

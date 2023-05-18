@@ -1,3 +1,4 @@
+import React from 'react'
 import { ACTIONS, DIGITS, OPERATORS } from './constants'
 import Header from './components/Header'
 import Grid from './components/Grid'
@@ -6,7 +7,7 @@ import GameProvider from './providers/game'
 
 import './styles.css'
 
-export default function App () {
+export default function App (): JSX.Element {
   return (
     <div className="game-container">
       <GameProvider>

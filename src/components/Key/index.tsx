@@ -1,3 +1,4 @@
+import React from 'react'
 import { useGameContext } from '../../providers/game'
 
 interface KeyProps {
@@ -7,15 +8,15 @@ interface KeyProps {
   noMatch?: boolean
 }
 
-export default function Key ({ exactMatch, keyType, looseMatch, noMatch }: KeyProps) {
+export default function Key ({ exactMatch, keyType, looseMatch, noMatch }: KeyProps): JSX.Element {
   const [{ status }, {
     deleteLatestEntry,
     handleValueOrOperatorClick,
     submitSolutionAttempt
   }] = useGameContext()
 
-  const onSelectKey = () => {
-    if (!status?.complete) {
+  const onSelectKey = (): void => {
+    if ((status?.complete) === false) {
       if (keyType === 'delete') {
         if (deleteLatestEntry != null) {
           deleteLatestEntry()
@@ -32,13 +33,13 @@ export default function Key ({ exactMatch, keyType, looseMatch, noMatch }: KeyPr
     }
   }
 
-  const matchStatusClass = exactMatch
+  const matchStatusClass = (exactMatch === true)
     ? 'exact-match'
-    : looseMatch
-      ? 'loose-match'
-      : noMatch
-        ? 'no-match'
-        : ''
+    : (looseMatch === true)
+        ? 'loose-match'
+        : (noMatch === true)
+            ? 'no-match'
+            : ''
 
   return (
     <button onClick={onSelectKey} className={`button ${matchStatusClass}`}>{keyType}</button>
