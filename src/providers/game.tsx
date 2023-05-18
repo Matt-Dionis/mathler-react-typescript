@@ -19,6 +19,7 @@ const GameContext = createContext([
   {
     deleteLatestEntry: () => {},
     handleValueOrOperatorClick: (key: string) => {},
+    startRandomGame: () => {},
     submitSolutionAttempt: () => {}
   }
 ])
