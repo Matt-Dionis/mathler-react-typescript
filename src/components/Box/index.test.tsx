@@ -19,6 +19,7 @@ describe('<Box />', () => {
         />
       </GameProvider>
     )
+    expect(container.getElementsByClassName('cell').length).toBe(1)
     expect(container.getElementsByClassName('active-populated').length).toBe(0)
     expect(container.getElementsByClassName('exact-match').length).toBe(0)
     expect(container.getElementsByClassName('loose-match').length).toBe(0)
