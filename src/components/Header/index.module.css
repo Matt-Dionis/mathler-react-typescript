@@ -1,0 +1,10 @@
+.header {
+  width: 100vw;
+  height: 6vh;
+  text-align: center;
+}
+
+.title,
+.description {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}

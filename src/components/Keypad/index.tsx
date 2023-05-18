@@ -1,3 +1,5 @@
+import keypadStyles from './index.module.css'
+
 import React, { useCallback, useEffect } from 'react'
 
 import Key from '../Key'
@@ -64,7 +66,7 @@ export default function Keypad ({
 
   return (
     <>
-      <div className="button-container">
+      <div className={keypadStyles['button-container']}>
         {digitKeys.map((key, index) => (
           <Key
             exactMatch={((exactMatches?.includes(key)) === true) || false}
@@ -75,7 +77,7 @@ export default function Keypad ({
           />
         ))}
       </div>
-      <div className="button-container">
+      <div className={keypadStyles['button-container']}>
         {operatorKeys.map((key, index) => (
           <Key
             exactMatch={((exactMatches?.includes(key)) === true) || false}
@@ -86,7 +88,7 @@ export default function Keypad ({
           />
         ))}
       </div>
-      <div className="button-container">
+      <div className={keypadStyles['button-container']}>
         <Key
           keyType={actionButtons[0]}
         />
