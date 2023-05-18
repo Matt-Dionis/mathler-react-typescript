@@ -1,3 +1,5 @@
+import keyStyles from './index.module.css'
+
 import React from 'react'
 import { useGameContext } from '../../providers/game'
 
@@ -42,6 +44,7 @@ export default function Key ({ exactMatch, keyType, looseMatch, noMatch }: KeyPr
             : ''
 
   return (
-    <button onClick={onSelectKey} className={`button ${matchStatusClass}`}>{keyType}</button>
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    <button onClick={onSelectKey} className={`${keyStyles.button} ${keyStyles[matchStatusClass]}`}>{keyType}</button>
   )
 }

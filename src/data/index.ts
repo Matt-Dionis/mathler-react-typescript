@@ -30,10 +30,11 @@ const games = [
   }
 ]
 
-const fetchGame = (): GameSettings => {
-  // const index = Math.floor(Math.random() * games.length);
-  // return games[index];
+export const fetchDailyGame = (): GameSettings => {
   return games[0]
 }
 
-export default fetchGame
+export const fetchRandomGame = (): GameSettings => {
+  const index = Math.floor(Math.random() * games.length)
+  return games[index]
+}

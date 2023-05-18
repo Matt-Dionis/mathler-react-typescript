@@ -1,3 +1,5 @@
+import boxStyles from './index.module.css'
+
 import React from 'react'
 import { useGameContext } from '../../providers/game'
 
@@ -24,7 +26,7 @@ export default function Box ({ columnIndex, rowIndex }: BoxProps): JSX.Element {
 
   return (
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    <div className={`cell ${activePopulatedClass} ${keyState}`}>
+    <div className={`${boxStyles.cell} ${boxStyles[activePopulatedClass]} ${keyState}`}>
       {key}
     </div>
   )

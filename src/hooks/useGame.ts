@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 
 import { DEFAULT_GRID } from '../constants'
-import fetchGame from '../data'
+import { fetchDailyGame, fetchRandomGame } from '../data'
 
 export interface StatusProp {
   complete: boolean
@@ -23,6 +23,7 @@ export type UseGameReturn = [
   {
     deleteLatestEntry: () => void
     handleValueOrOperatorClick: (key: string) => void
+    startRandomGame: () => void
     submitSolutionAttempt: () => void
   },
 ]
@@ -39,7 +40,7 @@ export default function useGame (): UseGameReturn {
   const [total, setTotal] = useState<number>(0)
 
   useEffect(() => {
-    const { solution: gameSolution, total: gameTotal } = fetchGame()
+    const { solution: gameSolution, total: gameTotal } = fetchDailyGame()
     setSolution(gameSolution)
     setTotal(gameTotal)
   }, [])
@@ -63,6 +64,26 @@ export default function useGame (): UseGameReturn {
   },
   [currentColumnIndex, grid, solution.length]
   )
+
+  const startRandomGame = useCallback(() => {
+    setGrid([
+      ['', '', '', '', '', ''],
+      ['', '', '', '', '', ''],
+      ['', '', '', '', '', ''],
+      ['', '', '', '', '', ''],
+      ['', '', '', '', '', ''],
+      ['', '', '', '', '', '']
+    ])
+    const { solution: gameSolution, total: gameTotal } = fetchRandomGame()
+    setSolution(gameSolution)
+    setTotal(gameTotal)
+    setCurrentColumnIndex(0)
+    setCurrentRowIndex(0)
+    setDisabledKeys([])
+    setExactMatches([])
+    setLooseMatches([])
+    setStatus({ complete: false, success: false })
+  }, [])
 
   const submitSolutionAttempt = useCallback(() => {
     if (!status.complete) {
@@ -124,6 +145,7 @@ export default function useGame (): UseGameReturn {
     {
       deleteLatestEntry,
       handleValueOrOperatorClick,
+      startRandomGame,
       submitSolutionAttempt
     }
   ]
