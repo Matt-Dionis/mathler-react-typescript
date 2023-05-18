@@ -15,7 +15,7 @@ export default function Header (): JSX.Element {
           <h3 className={headerStyles.description}>
             Congratulations!!!
           </h3>
-          <button onClick={startRandomGame}>Start new game</button>
+          <button className={headerStyles.button} onClick={startRandomGame}>Start new game</button>
         </>
       )}
       {status.complete && !status.success && (
@@ -23,15 +23,7 @@ export default function Header (): JSX.Element {
           <h3 className={headerStyles.description}>
             Try again with a new challenge?
           </h3>
-          <button onClick={startRandomGame}>Start new game</button>
-        </>
-      )}
-      {status.complete && status.success && (
-        <>
-          <h3 className={headerStyles.description}>
-            Congratulations!!!
-          </h3>
-          <button></button>
+          <button className={headerStyles.button} onClick={startRandomGame}>Start new game</button>
         </>
       )}
       {!status.complete && (

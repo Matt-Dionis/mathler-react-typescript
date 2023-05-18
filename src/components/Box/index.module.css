@@ -6,6 +6,8 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
+  min-width: 40px;
+  max-width: 200px;
 }
 
 .active-populated {
