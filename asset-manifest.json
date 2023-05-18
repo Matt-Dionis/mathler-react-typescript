@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/mathler-react-typescript/static/css/main.56c9f5d5.css",
+    "main.js": "/mathler-react-typescript/static/js/main.d431cf3f.js",
+    "index.html": "/mathler-react-typescript/index.html",
+    "main.56c9f5d5.css.map": "/mathler-react-typescript/static/css/main.56c9f5d5.css.map",
+    "main.d431cf3f.js.map": "/mathler-react-typescript/static/js/main.d431cf3f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.56c9f5d5.css",
+    "static/js/main.d431cf3f.js"
+  ]
+}
