@@ -1,66 +1,66 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect } from 'react'
 
-import Key from "../Key";
-import { useGameContext } from "../../providers/game";
+import Key from '../Key'
+import { useGameContext } from '../../providers/game'
 
-type KeypadProps = {
-  actionButtons: string[];
-  digitKeys: string[];
-  operatorKeys: string[];
-};
+interface KeypadProps {
+  actionButtons: string[]
+  digitKeys: string[]
+  operatorKeys: string[]
+}
 
-export default function Keypad({
+export default function Keypad ({
   actionButtons,
   digitKeys,
-  operatorKeys,
+  operatorKeys
 }: KeypadProps) {
   const [{
     currentColumnIndex,
     disabledKeys,
     exactMatches,
     looseMatches,
-    status,
+    status
   },
   {
     deleteLatestEntry,
     handleValueOrOperatorClick,
-    submitSolutionAttempt,
+    submitSolutionAttempt
   }] = useGameContext()
 
   const handleKeyboardInput = useCallback(
     (event: KeyboardEvent) => {
       if (!status?.complete) {
-        if (event.key === "Backspace") {
-          if (deleteLatestEntry) {
-            deleteLatestEntry();
+        if (event.key === 'Backspace') {
+          if (deleteLatestEntry != null) {
+            deleteLatestEntry()
           }
           return
         }
-        if (event.key === "Enter") {
-          if (submitSolutionAttempt) {
-            submitSolutionAttempt();
+        if (event.key === 'Enter') {
+          if (submitSolutionAttempt != null) {
+            submitSolutionAttempt()
           }
           return
         }
-  
-        const attemptkeys = [ ...digitKeys, ...operatorKeys ]
-  
+
+        const attemptkeys = [...digitKeys, ...operatorKeys]
+
         if (attemptkeys.includes(event.key)) {
-          if (handleValueOrOperatorClick) {
+          if (handleValueOrOperatorClick != null) {
             handleValueOrOperatorClick(event.key)
           }
         }
       }
     },
     [currentColumnIndex]
-  );
+  )
   useEffect(() => {
-    document.addEventListener("keydown", handleKeyboardInput);
+    document.addEventListener('keydown', handleKeyboardInput)
 
     return () => {
-      document.removeEventListener("keydown", handleKeyboardInput);
-    };
-  }, [handleKeyboardInput]);
+      document.removeEventListener('keydown', handleKeyboardInput)
+    }
+  }, [handleKeyboardInput])
 
   return (
     <>
@@ -95,5 +95,5 @@ export default function Keypad({
         />
       </div>
     </>
-  );
+  )
 }

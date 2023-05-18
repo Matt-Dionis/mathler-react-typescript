@@ -1,12 +1,12 @@
-import { ACTIONS, DIGITS, OPERATORS } from "./constants";
-import Header from "./components/Header";
-import Grid from "./components/Grid";
-import Keypad from "./components/Keypad";
-import GameProvider from "./providers/game";
+import { ACTIONS, DIGITS, OPERATORS } from './constants'
+import Header from './components/Header'
+import Grid from './components/Grid'
+import Keypad from './components/Keypad'
+import GameProvider from './providers/game'
 
-import "./styles.css";
+import './styles.css'
 
-export default function App() {
+export default function App () {
   return (
     <div className="game-container">
       <GameProvider>
@@ -19,5 +19,5 @@ export default function App() {
         />
       </GameProvider>
     </div>
-  );
+  )
 }

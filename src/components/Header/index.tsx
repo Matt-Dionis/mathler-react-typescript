@@ -1,6 +1,6 @@
-import { useGameContext } from "../../providers/game" 
+import { useGameContext } from '../../providers/game'
 
-export default function Header() {
+export default function Header () {
   const [{ total }] = useGameContext()
 
   return (
@@ -10,5 +10,5 @@ export default function Header() {
         Find the hidden calculation that equals {total}
       </h3>
     </div>
-  );
+  )
 }

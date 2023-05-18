@@ -1,23 +1,23 @@
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from 'react'
 
-import { DEFAULT_GRID } from "../constants";
-import fetchGame from "../data";
+import { DEFAULT_GRID } from '../constants'
+import fetchGame from '../data'
 
-export type StatusProp = {
-  complete: boolean,
-  success: boolean,
+export interface StatusProp {
+  complete: boolean
+  success: boolean
 }
 
-export default function useGame() {
-  const [currentColumnIndex, setCurrentColumnIndex] = useState<number>(0);
-  const [currentRowIndex, setCurrentRowIndex] = useState<number>(0);
+export default function useGame () {
+  const [currentColumnIndex, setCurrentColumnIndex] = useState<number>(0)
+  const [currentRowIndex, setCurrentRowIndex] = useState<number>(0)
   const [disabledKeys, setDisabledKeys] = useState<string[]>([])
   const [exactMatches, setExactMatches] = useState<string[]>([])
-  const [grid, setGrid] = useState<string[][]>(DEFAULT_GRID);
+  const [grid, setGrid] = useState<string[][]>(DEFAULT_GRID)
   const [looseMatches, setLooseMatches] = useState<string[]>([])
-  const [solution, setSolution] = useState<string[]>(["", "", "", "", "", ""]);
-  const [status, setStatus] = useState<StatusProp>({ complete: false, success: false });
-  const [total, setTotal] = useState<number>(0);
+  const [solution, setSolution] = useState<string[]>(['', '', '', '', '', ''])
+  const [status, setStatus] = useState<StatusProp>({ complete: false, success: false })
+  const [total, setTotal] = useState<number>(0)
 
   useEffect(() => {
     const { solution: gameSolution, total: gameTotal } = fetchGame()
@@ -27,23 +27,23 @@ export default function useGame() {
 
   const deleteLatestEntry = useCallback(() => {
     if (!status.complete) {
-      let newGrid = [...grid];
-      newGrid[currentRowIndex][currentColumnIndex - 1] = "";
-      setGrid(newGrid);
-      setCurrentColumnIndex((prev) => Math.max(0, prev - 1));
+      const newGrid = [...grid]
+      newGrid[currentRowIndex][currentColumnIndex - 1] = ''
+      setGrid(newGrid)
+      setCurrentColumnIndex((prev) => Math.max(0, prev - 1))
     }
-  }, [currentColumnIndex, currentRowIndex, grid, status]);
+  }, [currentColumnIndex, currentRowIndex, grid, status])
 
   const handleValueOrOperatorClick = useCallback((key: string) => {
-      if (!status.complete && currentColumnIndex < solution.length) {
-        let newGrid = [...grid];
-        newGrid[currentRowIndex][currentColumnIndex] = key;
-        setGrid(newGrid);
-        setCurrentColumnIndex((prev) => prev + 1);
-      }
-    },
-    [currentColumnIndex, grid, solution.length]
-  );
+    if (!status.complete && currentColumnIndex < solution.length) {
+      const newGrid = [...grid]
+      newGrid[currentRowIndex][currentColumnIndex] = key
+      setGrid(newGrid)
+      setCurrentColumnIndex((prev) => prev + 1)
+    }
+  },
+  [currentColumnIndex, grid, solution.length]
+  )
 
   const submitSolutionAttempt = useCallback(() => {
     if (!status.complete) {
@@ -55,7 +55,7 @@ export default function useGame() {
       if (attemptHasNecessaryLength) {
         let calculatedTotal = 0
         try {
-          calculatedTotal = Function(`return (${latestAttempt.join("")})`)()
+          calculatedTotal = Function(`return (${latestAttempt.join('')})`)()
 
           if (calculatedTotal !== total) {
             alert(`Every guess must equal ${total}`)
@@ -67,27 +67,27 @@ export default function useGame() {
         }
         for (let i = 0; i < latestAttempt.length; i++) {
           if (latestAttempt[i] === solution[i]) {
-            setExactMatches((prev) => [ ...prev, latestAttempt[i]])
+            setExactMatches((prev) => [...prev, latestAttempt[i]])
           } else if (solution.includes(latestAttempt[i])) {
-            setLooseMatches((prev) => [ ...prev, latestAttempt[i]])
+            setLooseMatches((prev) => [...prev, latestAttempt[i]])
           } else {
-            setDisabledKeys((prev) => [ ...prev, latestAttempt[i]])
+            setDisabledKeys((prev) => [...prev, latestAttempt[i]])
           }
         }
 
         if (attemptIsCorrect) {
-          setStatus({ complete: true, success: true });
+          setStatus({ complete: true, success: true })
         }
 
         if (finalAttempt && !attemptIsCorrect) {
           setStatus({ complete: true, success: false })
         }
 
-        setCurrentRowIndex((prev) => prev + 1);
+        setCurrentRowIndex((prev) => prev + 1)
         setCurrentColumnIndex(0)
       }
     }
-  }, [currentColumnIndex, currentRowIndex, grid, solution, status]);
+  }, [currentColumnIndex, currentRowIndex, grid, solution, status])
 
   return [
     {
@@ -99,12 +99,12 @@ export default function useGame() {
       looseMatches,
       solution,
       status,
-      total,
+      total
     },
     {
       deleteLatestEntry,
       handleValueOrOperatorClick,
-      submitSolutionAttempt,
+      submitSolutionAttempt
     }
   ]
 }

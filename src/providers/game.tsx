@@ -1,7 +1,7 @@
-import { ReactNode, createContext, useContext } from "react"
+import { type ReactNode, createContext, useContext } from 'react'
 
-import useGame from "../hooks/useGame"
-import { DEFAULT_GRID } from "../constants";
+import useGame from '../hooks/useGame'
+import { DEFAULT_GRID } from '../constants'
 
 const GameContext = createContext([
   {
@@ -13,16 +13,16 @@ const GameContext = createContext([
     looseMatches: [] as string[],
     solution: [] as string[],
     status: { complete: false, success: false },
-    total: 0,
+    total: 0
   },
   {
     deleteLatestEntry: () => {},
     handleValueOrOperatorClick: (key: string) => {},
-    submitSolutionAttempt: () => {},
+    submitSolutionAttempt: () => {}
   }
 ])
 
-export default function GameProvider({ children }: { children: ReactNode }) {
+export default function GameProvider ({ children }: { children: ReactNode }) {
   const gameData = useGame()
 
   return (
@@ -32,6 +32,6 @@ export default function GameProvider({ children }: { children: ReactNode }) {
   )
 }
 
-export function useGameContext() {
+export function useGameContext () {
   return useContext(GameContext)
 }

@@ -1,43 +1,46 @@
-import { useGameContext } from "../../providers/game";
+import { useGameContext } from '../../providers/game'
 
-type KeyProps = {
-  exactMatch?: boolean,
-  keyType: string,
-  looseMatch?: boolean,
-  noMatch?: boolean,
+interface KeyProps {
+  exactMatch?: boolean
+  keyType: string
+  looseMatch?: boolean
+  noMatch?: boolean
 }
 
-export default function Key({ exactMatch, keyType, looseMatch, noMatch }: KeyProps) {
+export default function Key ({ exactMatch, keyType, looseMatch, noMatch }: KeyProps) {
   const [{ status }, {
     deleteLatestEntry,
     handleValueOrOperatorClick,
-    submitSolutionAttempt,
+    submitSolutionAttempt
   }] = useGameContext()
 
   const onSelectKey = () => {
     if (!status?.complete) {
-      if (keyType === "delete") {
-        if (deleteLatestEntry) {
-          deleteLatestEntry();
+      if (keyType === 'delete') {
+        if (deleteLatestEntry != null) {
+          deleteLatestEntry()
         }
-      } else if (keyType === "enter") {
-        if (submitSolutionAttempt) {
-          submitSolutionAttempt();
+      } else if (keyType === 'enter') {
+        if (submitSolutionAttempt != null) {
+          submitSolutionAttempt()
         }
       } else {
-        if (handleValueOrOperatorClick) {
-          handleValueOrOperatorClick(keyType);
+        if (handleValueOrOperatorClick != null) {
+          handleValueOrOperatorClick(keyType)
         }
       }
     }
-  };
+  }
 
-  const matchStatusClass = exactMatch ? "exact-match"
-    : looseMatch ? "loose-match"
-    : noMatch ? "no-match"
-    : ""
+  const matchStatusClass = exactMatch
+    ? 'exact-match'
+    : looseMatch
+      ? 'loose-match'
+      : noMatch
+        ? 'no-match'
+        : ''
 
   return (
     <button onClick={onSelectKey} className={`button ${matchStatusClass}`}>{keyType}</button>
-  );
+  )
 }

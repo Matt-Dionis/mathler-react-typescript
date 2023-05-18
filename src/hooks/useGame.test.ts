@@ -1,12 +1,12 @@
 import '@testing-library/jest-dom'
-import { renderHook } from '@testing-library/react';
-import useGame from './useGame';
+import { renderHook } from '@testing-library/react'
+import useGame from './useGame'
 
 describe('useGame hook', () => {
   it('has default data', () => {
-    const { result: { current } } = renderHook(() => useGame());
+    const { result: { current } } = renderHook(() => useGame())
     const [
-      { 
+      {
         currentColumnIndex,
         currentRowIndex,
         disabledKeys,
@@ -15,7 +15,7 @@ describe('useGame hook', () => {
         looseMatches,
         solution,
         status,
-        total,
+        total
       },
       {
         deleteLatestEntry,
@@ -29,7 +29,7 @@ describe('useGame hook', () => {
     expect(exactMatches?.length).toEqual(0)
     expect(grid?.length).toEqual(6)
     expect(looseMatches?.length).toEqual(0)
-    expect(solution).toEqual(["7","*","8","-","1","2"])
+    expect(solution).toEqual(['7', '*', '8', '-', '1', '2'])
     expect(status?.complete).toEqual(false)
     expect(status?.success).toEqual(false)
     expect(total).toEqual(44)
@@ -37,4 +37,4 @@ describe('useGame hook', () => {
     expect(handleValueOrOperatorClick).toBeDefined()
     expect(submitSolutionAttempt).toBeDefined()
   })
-});
+})
