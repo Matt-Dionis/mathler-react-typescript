@@ -26,8 +26,9 @@ const games = [
 ];
 
 const fetchGame = () => {
-  const index = Math.floor(Math.random() * games.length);
-  return games[index];
+  // const index = Math.floor(Math.random() * games.length);
+  // return games[index];
+  return games[0]
 };
 
 export default fetchGame;

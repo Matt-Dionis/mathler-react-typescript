@@ -14,12 +14,12 @@ describe('<Header />', () => {
         expect(screen.getByText(/Mathler/)).toBeInTheDocument();
     });
 
-    it('should render a description with a total', () => {
+    it('should render a description with a total based on context', () => {
       render(
         <GameProvider>
           <Header />
         </GameProvider>
       )
-      expect(screen.getByText(/Find the hidden calculation that equals /)).toBeInTheDocument();
+      expect(screen.getByText(/Find the hidden calculation that equals 44/)).toBeInTheDocument();
     });
 });
