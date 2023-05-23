@@ -54,7 +54,7 @@ export default function Keypad ({
         }
       }
     },
-    [currentColumnIndex]
+    [currentColumnIndex, status.complete]
   )
   useEffect(() => {
     document.addEventListener('keydown', handleKeyboardInput)
