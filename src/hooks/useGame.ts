@@ -69,12 +69,18 @@ export default function useGame (): GameContextType {
       const finalAttempt = currentRowIndex === grid.length - 1
 
       if (attemptHasNecessaryLength) {
-        let calculatedTotal = 0
         try {
-          // eslint-disable-next-line @typescript-eslint/no-implied-eval, no-new-func
-          calculatedTotal = Function(`return (${latestAttempt.join('')})`)()
+          let calculatedTotal = 0
+          const latestAttemptString = latestAttempt.join('')
+          const validInput = /^[0-9+\-*/]{6}$/
+          const isValidInput = validInput.test(latestAttemptString)
 
-          if (calculatedTotal !== total) {
+          if (isValidInput) {
+            // eslint-disable-next-line @typescript-eslint/no-implied-eval, no-new-func
+            calculatedTotal = Function(`return (${latestAttempt.join('')})`)()
+          }
+
+          if (!isValidInput || (calculatedTotal !== total)) {
             alert(`Every guess must equal ${total}`)
             return
           }
