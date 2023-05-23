@@ -15,10 +15,10 @@ export default function Box ({ columnIndex, rowIndex }: BoxProps): JSX.Element {
     solution
   }] = useGameContext()
 
-  const key = grid?.[rowIndex][columnIndex] ?? ''
-  const exactMatch = solution?.[columnIndex] === key?.toString()
+  const key = grid[rowIndex][columnIndex] ?? ''
+  const exactMatch = solution[columnIndex] === key.toString()
   const looseMatch =
-    !exactMatch && key !== '' && solution?.includes(key)
+    !exactMatch && key !== '' && solution.includes(key)
   const keyState = (currentRowIndex != null) && currentRowIndex > rowIndex &&
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     (exactMatch ? 'exact-match' : (looseMatch ?? false) ? 'loose-match' : 'no-match')

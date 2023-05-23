@@ -4,7 +4,32 @@ import { type ReactNode, createContext, useContext } from 'react'
 import useGame from '../hooks/useGame'
 import { DEFAULT_GRID } from '../constants'
 
-const GameContext = createContext([
+export interface StatusProp {
+  complete: boolean
+  success: boolean
+}
+
+export type GameContextType = [
+  {
+    currentColumnIndex: number
+    currentRowIndex: number
+    disabledKeys: string[]
+    exactMatches: string[]
+    grid: string[][]
+    looseMatches: string[]
+    solution: string[]
+    status: StatusProp
+    total: number
+  },
+  {
+    deleteLatestEntry: () => void
+    handleValueOrOperatorClick: (key: string) => void
+    startRandomGame: () => void
+    submitSolutionAttempt: () => void
+  },
+]
+
+const GameContext = createContext<GameContextType>([
   {
     currentColumnIndex: 0,
     currentRowIndex: 0,
@@ -34,6 +59,6 @@ export default function GameProvider ({ children }: { children: ReactNode }): JS
   )
 }
 
-export function useGameContext (): any {
+export function useGameContext (): GameContextType {
   return useContext(GameContext)
 }
