@@ -31,26 +31,20 @@ export default function Keypad ({
 
   const handleKeyboardInput = useCallback(
     (event: KeyboardEvent) => {
-      if ((status?.complete) === false) {
+      if (!status.complete) {
         if (event.key === 'Backspace') {
-          if (deleteLatestEntry != null) {
-            deleteLatestEntry()
-          }
+          deleteLatestEntry()
           return
         }
         if (event.key === 'Enter') {
-          if (submitSolutionAttempt != null) {
-            submitSolutionAttempt()
-          }
+          submitSolutionAttempt()
           return
         }
 
         const attemptkeys = [...digitKeys, ...operatorKeys]
 
         if (attemptkeys.includes(event.key)) {
-          if (handleValueOrOperatorClick != null) {
-            handleValueOrOperatorClick(event.key)
-          }
+          handleValueOrOperatorClick(event.key)
         }
       }
     },
@@ -69,22 +63,22 @@ export default function Keypad ({
       <div className={keypadStyles['button-container']}>
         {digitKeys.map((key, index) => (
           <Key
-            exactMatch={((exactMatches?.includes(key)) === true) || false}
+            exactMatch={exactMatches.includes(key)}
             key={index}
             keyType={key}
-            looseMatch={((looseMatches?.includes(key)) === true) || false}
-            noMatch={((disabledKeys?.includes(key)) === true) || false}
+            looseMatch={looseMatches.includes(key)}
+            noMatch={disabledKeys.includes(key)}
           />
         ))}
       </div>
       <div className={keypadStyles['button-container']}>
         {operatorKeys.map((key, index) => (
           <Key
-            exactMatch={((exactMatches?.includes(key)) === true) || false}
+            exactMatch={exactMatches.includes(key)}
             key={index}
             keyType={key}
-            looseMatch={((looseMatches?.includes(key)) === true) || false}
-            noMatch={((disabledKeys?.includes(key)) === true) || false}
+            looseMatch={looseMatches.includes(key)}
+            noMatch={disabledKeys.includes(key)}
           />
         ))}
       </div>

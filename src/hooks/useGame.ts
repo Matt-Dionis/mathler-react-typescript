@@ -2,33 +2,9 @@ import { useCallback, useEffect, useState } from 'react'
 
 import { DEFAULT_GRID } from '../constants'
 import { fetchDailyGame, fetchRandomGame } from '../data'
+import type { GameContextType, StatusProp } from '../providers/game'
 
-export interface StatusProp {
-  complete: boolean
-  success: boolean
-}
-
-export type UseGameReturn = [
-  {
-    currentColumnIndex: number
-    currentRowIndex: number
-    disabledKeys: string[]
-    exactMatches: string[]
-    grid: string[][]
-    looseMatches: string[]
-    solution: string[]
-    status: StatusProp
-    total: number
-  },
-  {
-    deleteLatestEntry: () => void
-    handleValueOrOperatorClick: (key: string) => void
-    startRandomGame: () => void
-    submitSolutionAttempt: () => void
-  },
-]
-
-export default function useGame (): UseGameReturn {
+export default function useGame (): GameContextType {
   const [currentColumnIndex, setCurrentColumnIndex] = useState<number>(0)
   const [currentRowIndex, setCurrentRowIndex] = useState<number>(0)
   const [disabledKeys, setDisabledKeys] = useState<string[]>([])

@@ -16,19 +16,13 @@ export default function Key ({ exactMatch, keyType, looseMatch, noMatch }: KeyPr
   }] = useGameContext()
 
   const onSelectKey = (): void => {
-    if ((status?.complete) === false) {
+    if (!status.complete) {
       if (keyType === 'delete') {
-        if (deleteLatestEntry != null) {
-          deleteLatestEntry()
-        }
+        deleteLatestEntry()
       } else if (keyType === 'enter') {
-        if (submitSolutionAttempt != null) {
-          submitSolutionAttempt()
-        }
+        submitSolutionAttempt()
       } else {
-        if (handleValueOrOperatorClick != null) {
-          handleValueOrOperatorClick(keyType)
-        }
+        handleValueOrOperatorClick(keyType)
       }
     }
   }

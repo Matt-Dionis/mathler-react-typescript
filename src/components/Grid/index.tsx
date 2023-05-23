@@ -10,7 +10,7 @@ export default function Grid (): JSX.Element {
   return (
     <div className={gridStyles['grid-container']}>
       <div className={gridStyles.grid}>
-        {grid?.map((row: string[], rowIndex: number) => {
+        {grid.map((row: string[], rowIndex: number) => {
           return row.map((key: string, colIndex: number) => {
             return (
               <Box key={`${rowIndex},${colIndex}`} columnIndex={colIndex} rowIndex={rowIndex} />
