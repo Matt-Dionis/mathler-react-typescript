@@ -1,25 +1,83 @@
 import { useCallback, useEffect, useState } from 'react'
 
-import { DEFAULT_GRID } from '../constants'
 import { fetchDailyGame, fetchRandomGame } from '../data'
 import type { GameContextType, StatusProp } from '../providers/game'
 
 export default function useGame (): GameContextType {
-  const [currentColumnIndex, setCurrentColumnIndex] = useState<number>(0)
-  const [currentRowIndex, setCurrentRowIndex] = useState<number>(0)
-  const [disabledKeys, setDisabledKeys] = useState<string[]>([])
-  const [exactMatches, setExactMatches] = useState<string[]>([])
-  const [grid, setGrid] = useState<string[][]>(DEFAULT_GRID)
-  const [looseMatches, setLooseMatches] = useState<string[]>([])
-  const [solution, setSolution] = useState<string[]>(['', '', '', '', '', ''])
-  const [status, setStatus] = useState<StatusProp>({ complete: false, success: false })
-  const [total, setTotal] = useState<number>(0)
+  const currentColumnIndexInProgress = JSON.parse(localStorage.getItem('currentColumnIndex') ?? '0')
+  const currentRowIndexInProgress = JSON.parse(localStorage.getItem('currentRowIndex') ?? '0')
+  const disabledKeysInProgress = JSON.parse(localStorage.getItem('disabledKeys') ?? '[]')
+  const exactMatchesInProgress = JSON.parse(localStorage.getItem('exactMatches') ?? '[]')
+  const gridInProgress = JSON.parse(localStorage.getItem('grid') ?? `[
+    ["", "", "", "", "", ""],
+    ["", "", "", "", "", ""],
+    ["", "", "", "", "", ""],
+    ["", "", "", "", "", ""],
+    ["", "", "", "", "", ""],
+    ["", "", "", "", "", ""]
+  ]`)
+  const looseMatchesInProgress = JSON.parse(localStorage.getItem('looseMatches') ?? '[]')
+  const solutionInProgress = JSON.parse(localStorage.getItem('solution') ?? '[]')
+  const statusInProgress = JSON.parse(localStorage.getItem('status') ?? '{"complete":false,"success":false}')
+  const totalInProgress = JSON.parse(localStorage.getItem('total') ?? '0')
+
+  const [currentColumnIndex, setCurrentColumnIndex] = useState<number>(currentColumnIndexInProgress)
+  const [currentRowIndex, setCurrentRowIndex] = useState<number>(currentRowIndexInProgress)
+  const [disabledKeys, setDisabledKeys] = useState<string[]>(disabledKeysInProgress)
+  const [exactMatches, setExactMatches] = useState<string[]>(exactMatchesInProgress)
+  const [grid, setGrid] = useState<string[][]>(gridInProgress)
+  const [looseMatches, setLooseMatches] = useState<string[]>(looseMatchesInProgress)
+  const [solution, setSolution] = useState<string[]>(solutionInProgress)
+  const [status, setStatus] = useState<StatusProp>(statusInProgress)
+  const [total, setTotal] = useState<number>(totalInProgress)
 
   useEffect(() => {
-    const { solution: gameSolution, total: gameTotal } = fetchDailyGame()
-    setSolution(gameSolution)
-    setTotal(gameTotal)
+    if (grid[0][0] === '') {
+      const { solution: gameSolution, total: gameTotal } = fetchDailyGame()
+      setSolution(gameSolution)
+      setTotal(gameTotal)
+    }
   }, [])
+
+  useEffect(() => {
+    localStorage.setItem('currentColumnIndex', JSON.stringify(currentColumnIndex))
+  }, [currentColumnIndex])
+
+  useEffect(() => {
+    localStorage.setItem('currentRowIndex', JSON.stringify(currentRowIndex))
+  }, [currentRowIndex])
+
+  useEffect(() => {
+    localStorage.setItem('disabledKeys', JSON.stringify(disabledKeys))
+  }, [disabledKeys])
+
+  useEffect(() => {
+    localStorage.setItem('exactMatches', JSON.stringify(exactMatches))
+  }, [exactMatches])
+
+  useEffect(() => {
+    localStorage.setItem('grid', JSON.stringify(grid))
+  }, [grid])
+
+  useEffect(() => {
+    localStorage.setItem('looseMatches', JSON.stringify(looseMatches))
+  }, [looseMatches])
+
+  useEffect(() => {
+    localStorage.setItem('solution', JSON.stringify(solution))
+  }, [solution])
+
+  useEffect(() => {
+    if (status.complete) {
+      localStorage.clear()
+    } else {
+      localStorage.setItem('status', JSON.stringify(status))
+    }
+  }, [status.complete])
+
+  useEffect(() => {
+    localStorage.setItem('total', JSON.stringify(total))
+  }, [total])
 
   const deleteLatestEntry = useCallback(() => {
     if (!status.complete) {
