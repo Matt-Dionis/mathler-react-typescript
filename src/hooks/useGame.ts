@@ -18,7 +18,7 @@ export default function useGame (): GameContextType {
   ]`)
   const looseMatchesInProgress = JSON.parse(localStorage.getItem('looseMatches') ?? '[]')
   const solutionInProgress = JSON.parse(localStorage.getItem('solution') ?? '[]')
-  const statusInProgress = JSON.parse(localStorage.getItem('status') ?? '0')
+  const statusInProgress = JSON.parse(localStorage.getItem('status') ?? '{"complete":false,"success":false}')
   const totalInProgress = JSON.parse(localStorage.getItem('total') ?? '0')
 
   const [currentColumnIndex, setCurrentColumnIndex] = useState<number>(currentColumnIndexInProgress)
